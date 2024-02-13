@@ -1,12 +1,12 @@
 package com.ebanx.bank.entity;
 
-import lombok.Data;
+import lombok.Builder;
 
 import java.math.BigDecimal;
 
-@Data
+@Builder
 public class Account {
-    private Long accountId;
+    private Integer accountId;
     private BigDecimal accountBalance;
     private String typeTransaction;
 }
