@@ -1,6 +1,6 @@
-package com.ebanx.bank.util;
+package com.bank.project.util;
 
-import com.ebanx.bank.entity.Account;
+import com.bank.project.entity.Account;
 import com.google.gson.Gson;
 import lombok.experimental.UtilityClass;
 

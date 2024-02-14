@@ -3,11 +3,11 @@
 /target/bank-0.0.1-SNAPSHOT.jar.original
 /target/classes/com/ebanx/bank/BankApplication.class
 /target/test-classes/com/ebanx/bank/BankApplicationTests.class
-/target/surefire-reports/com.ebanx.bank.BankApplicationTests.txt
+/target/surefire-reports/com.bank.project.BankApplicationTests.txt
 /target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 /target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
 /target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
 /target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst
 /target/maven-archiver/pom.properties
-/target/surefire-reports/TEST-com.ebanx.bank.BankApplicationTests.xml
+/target/surefire-reports/TEST-com.bank.project.BankApplicationTests.xml
 /.idea/

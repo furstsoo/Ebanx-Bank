@@ -1,9 +1,7 @@
-package com.ebanx.bank.controller;
+package com.bank.project.controller;
 
 
-import com.ebanx.bank.service.BankService;
-import com.ebanx.bank.util.AccountEnum;
-import com.ebanx.bank.util.FileUtil;
+import com.bank.project.service.BankService;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

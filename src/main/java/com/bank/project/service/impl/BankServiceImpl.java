@@ -1,8 +1,7 @@
-package com.ebanx.bank.service.impl;
+package com.bank.project.service.impl;
 
-import com.ebanx.bank.entity.Account;
-import com.ebanx.bank.service.BankService;
-import com.ebanx.bank.util.FileUtil;
+import com.bank.project.service.BankService;
+import com.bank.project.util.FileUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 

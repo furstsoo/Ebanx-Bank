@@ -1,4 +1,4 @@
-package com.ebanx.bank.util;
+package com.bank.project.util;
 
 import lombok.Getter;
 

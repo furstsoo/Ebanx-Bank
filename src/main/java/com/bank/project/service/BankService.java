@@ -1,7 +1,5 @@
-package com.ebanx.bank.service;
+package com.bank.project.service;
 
-import com.ebanx.bank.entity.Account;
-import com.ebanx.bank.entity.TransactionRequest;
 
 import java.io.IOException;
 import java.math.BigDecimal;
