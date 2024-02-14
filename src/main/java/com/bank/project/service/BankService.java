@@ -13,4 +13,6 @@ public interface BankService {
     BigDecimal findBalance(Integer accountId) throws IOException;
 
     Object transaction(TransactionRequest request) throws IOException;
+
+    void reset() throws IOException;
 }

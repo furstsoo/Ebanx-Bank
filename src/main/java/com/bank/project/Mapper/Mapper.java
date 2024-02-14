@@ -17,11 +17,11 @@ public class Mapper {
     }
 
 
-    public static Transfer getTransfer(Account transaction) {
+    public static Transfer getTransfer(Account accountOrigin, Account accountDestination) {
         Transfer transfer = new Transfer();
 
-        transfer.setOrigin(getAccount(transaction));
-        transfer.setDestination(getAccount(transaction));
+        transfer.setOrigin(getAccount(accountOrigin));
+        transfer.setDestination(getAccount(accountDestination));
 
         return transfer;
     }

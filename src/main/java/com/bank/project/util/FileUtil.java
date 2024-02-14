@@ -3,13 +3,14 @@ package com.bank.project.util;
 import com.bank.project.entity.Account;
 import com.google.gson.Gson;
 import lombok.experimental.UtilityClass;
+import org.apache.tomcat.util.http.fileupload.FileUtils;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 
 @UtilityClass
 public class FileUtil {
@@ -24,6 +25,10 @@ public class FileUtil {
     }
     public static Boolean findFile(String accountId) {
         return Files.exists(Path.of("src/main/resources/json/account" + accountId + ".json"));
+    }
+
+    public static void deleteFiles() throws IOException {
+        FileUtils.cleanDirectory(new File("src/main/resources/json"));
     }
 
     public static void updateAndCreateFile(String accountId, Account account) throws IOException {

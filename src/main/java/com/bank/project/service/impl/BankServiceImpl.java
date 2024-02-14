@@ -9,14 +9,12 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 @Service
 @Slf4j
 public class BankServiceImpl implements BankService {
     @Override
     public BigDecimal findBalance(Integer accountId) throws IOException {
-        //Arrays.asList(100, 200, 300).contains(accountId)
         return FileUtil.findFile(String.valueOf(accountId)) ? FileUtil.readFile(String.valueOf(accountId)).getBalance() :
                 BigDecimal.ZERO;
     }
@@ -31,17 +29,8 @@ public class BankServiceImpl implements BankService {
         };
     }
 
-    private Transfer transfer(TransactionRequest request) {
-        return null;
-    }
-
-    private Origin withdraw(TransactionRequest request) {
-        return null;
-    }
-
     private Destination deposit(TransactionRequest request) throws IOException {
         if (FileUtil.findFile(request.getDestination())) {
-
             //ler arquivo
             Account account = FileUtil.readFile(request.getDestination());
 
@@ -56,7 +45,6 @@ public class BankServiceImpl implements BankService {
             return Mapper.getDestination(account);
 
         } else {
-            //não tem arquivo
             // cria um arquivo novo com base no id da conta
             Account account = Mapper.accountMapper(request);
             FileUtil.updateAndCreateFile(request.getDestination(), account);
@@ -65,4 +53,58 @@ public class BankServiceImpl implements BankService {
             return Mapper.getDestination(account);
         }
     }
+
+    private Origin withdraw(TransactionRequest request) throws IOException {
+        if (FileUtil.findFile(request.getOrigin())) {
+            //ler arquivo
+            Account account = FileUtil.readFile(request.getOrigin());
+
+            //mudar o saldo = saldo inicial cadastrado + valor novo = novo saldo
+            account.setBalance(account.getBalance().subtract(request.getAmount()));
+            log.info(">>> withdraw made successfully <<<");
+
+            // altera o arquivo com o saldo novo
+            FileUtil.updateAndCreateFile(request.getOrigin(), account);
+
+            //monta o payload para enviar pra controller
+            return Mapper.getOrigin(account);
+
+        }
+        else{
+            log.error(">>> Account Not Found <<<");
+            throw new IllegalStateException();
+        }
+    }
+
+    private Transfer transfer(TransactionRequest request) throws IOException {
+        if (FileUtil.findFile(request.getDestination()) && FileUtil.findFile(request.getOrigin())) {
+
+            //ler arquivo conta origem e conta destino
+            Account accountOrigin = FileUtil.readFile(request.getOrigin());
+            Account accountDestination = FileUtil.readFile(request.getDestination());
+
+
+            //mudar o saldo = saldo inicial cadastrado + valor novo = novo saldo
+            accountDestination.setBalance(accountDestination.getBalance().add(accountOrigin.getBalance()));
+            accountOrigin.setBalance(accountOrigin.getBalance().subtract(request.getAmount()));
+            log.info(">>> Transfer made successfully <<<");
+
+            // altera o arquivo com o saldo novo
+            FileUtil.updateAndCreateFile(request.getOrigin(), accountOrigin);
+            FileUtil.updateAndCreateFile(request.getDestination(), accountDestination);
+
+            //monta o payload para enviar pra controller
+            return Mapper.getTransfer(accountOrigin, accountDestination) ;
+        }
+        else{
+            log.error(">>> Account Not Found <<<");
+            throw new IllegalStateException();
+        }
+    }
+
+    @Override
+    public void reset() throws IOException {
+        FileUtil.deleteFiles();
+    }
+
 }

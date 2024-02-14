@@ -1,16 +1,12 @@
 package com.bank.project.controller;
 
 
-import com.bank.project.Mapper.Mapper;
-import com.bank.project.entity.Account;
 import com.bank.project.entity.TransactionRequest;
-import com.bank.project.entity.Transfer;
 import com.bank.project.service.BankService;
 import jakarta.websocket.server.PathParam;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.math.BigDecimal;
-import java.util.Arrays;
 
 
 @Slf4j
@@ -41,15 +36,20 @@ public class BankController {
     @RequestMapping(value = "/event", method = RequestMethod.POST)
     public ResponseEntity<Object> transactionAccount(@RequestBody TransactionRequest request) throws IOException {
         log.info(">>> Init transaction account <<<");
-
-        var accountValid = Arrays.asList("100", "300").contains(request.getDestination());
-        if(accountValid){
+        try {
             return new ResponseEntity<>(bankService.transaction(request), HttpStatus.CREATED);
-        }
-        else {
+        } catch (Exception e) {
             return new ResponseEntity<>(BigDecimal.ZERO, HttpStatus.NOT_FOUND);
-
         }
+    }
+
+    @RequestMapping(value = "/reset", method = RequestMethod.POST)
+    public ResponseEntity<Object> resetState() throws IOException {
+        log.info(">>> Init reset <<<");
+        bankService.reset();
+
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }
