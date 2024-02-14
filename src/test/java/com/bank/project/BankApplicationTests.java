@@ -1,4 +1,4 @@
-package com.ebanx.bank;
+package com.bank.project;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
