@@ -22,7 +22,7 @@ public class BankServiceImpl implements BankService {
     @Override
     public Object transaction(TransactionRequest request) throws IOException {
         return switch (request.getType()) {
-            case "deposit"-> deposit(request);
+            case "deposit" -> deposit(request);
             case "withdraw" -> withdraw(request);
             case "transfer" -> transfer(request);
             default -> throw new IllegalStateException("Unexpected value: " + request.getType());
@@ -50,7 +50,7 @@ public class BankServiceImpl implements BankService {
             FileUtil.updateAndCreateFile(request.getDestination(), account);
 
             //monta o payload para enviar pra controller
-            return Mapper.getDestination(account);
+            return Mapper.getDestination(FileUtil.readFile(request.getDestination()));
         }
     }
 
@@ -69,8 +69,7 @@ public class BankServiceImpl implements BankService {
             //monta o payload para enviar pra controller
             return Mapper.getOrigin(account);
 
-        }
-        else{
+        } else {
             log.error(">>> Account Not Found <<<");
             throw new IllegalStateException();
         }
@@ -94,9 +93,8 @@ public class BankServiceImpl implements BankService {
             FileUtil.updateAndCreateFile(request.getDestination(), accountDestination);
 
             //monta o payload para enviar pra controller
-            return Mapper.getTransfer(accountOrigin, accountDestination) ;
-        }
-        else{
+            return Mapper.getTransfer(accountOrigin, accountDestination);
+        } else {
             log.error(">>> Account Not Found <<<");
             throw new IllegalStateException();
         }
@@ -104,7 +102,14 @@ public class BankServiceImpl implements BankService {
 
     @Override
     public void reset() throws IOException {
-        FileUtil.deleteFiles();
+        var file300 = FileUtil.readFile("300");
+
+        file300.setBalance(BigDecimal.ZERO);
+
+        FileUtil.updateAndCreateFile("300", file300);
+
+        log.info(">>> Reset made successfully <<<");
+
     }
 
 }
