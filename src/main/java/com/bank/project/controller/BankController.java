@@ -44,11 +44,11 @@ public class BankController {
     }
 
     @RequestMapping(value = "/reset", method = RequestMethod.POST)
-    public ResponseEntity<Object> resetState() throws IOException {
+    public ResponseEntity<String> resetState() throws IOException {
         log.info(">>> Init reset <<<");
         bankService.reset();
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("OK", HttpStatus.OK);
 
     }
 
